@@ -1,10 +1,11 @@
 const express = require('express');
+const cors = require('cors');  // CORS package
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Essential middleware
+app.use(cors());  // Enable CORS for all routes
 app.use(express.json()); // For parsing JSON requests
-// app.use(cors()); // Uncomment later if needed for frontend
 
 // In-memory data store
 const tradesmen = [
@@ -21,7 +22,7 @@ app.get('/api/tradesmen', (req, res) => {
   res.json(tradesmen);
 });
 
-// 404 Error handler (catches undefined routes)
+// 404 Error handler
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
@@ -29,8 +30,6 @@ app.use((req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  
-  // Optional: Test log (visible in Render logs)
   console.log('Try these endpoints:');
   console.log(`http://localhost:${PORT}/api/tradesmen`);
 });
